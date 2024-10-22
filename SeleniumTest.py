@@ -94,7 +94,7 @@ class TestSeuBarriga(unittest.TestCase):
 
 				invoice_name = self.driver.find_element(By.ID,"nome")
 				invoice_name.send_keys(new_invoice)
-
+				time.sleep(1)
 				save = self.driver.find_element(By.XPATH, '/html/body/div[2]/form/div[2]/button')
 				save.click()
 
@@ -103,8 +103,33 @@ class TestSeuBarriga(unittest.TestCase):
 								EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success']"))
 						)
 						print(f'Conta adicionada com sucesso! {message.text}')
+						self.list_and_edit_invoice()
 				except Exception as e:
 						print('Erro ao adicionar nova conta:', str(e))
+
+		def list_and_edit_invoice(self):
+				nav_bar = self.driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[2]/a')
+				nav_bar.click()
+				list_invoices = self.driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[2]/ul/li[2]/a')
+				list_invoices.click()
+				edit_invoice = self.driver.find_element(By.XPATH, '//*[@id="tabelaContas"]/tbody/tr/td[2]/a[1]/span')
+				edit_invoice.click()
+				new_invoice = self.generate_new_invoice()
+				invoice_name = self.driver.find_element(By.ID,"nome")
+				invoice_name.clear()
+				invoice_name.send_keys(new_invoice)
+				time.sleep(1)
+				save = self.driver.find_element(By.XPATH, '/html/body/div[2]/form/div[2]/button')
+				save.click()
+				try:
+						message = WebDriverWait(self.driver, 10).until(
+								EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success']"))
+						)
+						print(f'Conta alterada com sucesso! {message.text}')
+				except Exception as e:
+						print('Erro ao alterar conta:', str(e))
+
+
 
 if __name__ == "__main__":
 		unittest.main()
