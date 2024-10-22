@@ -13,7 +13,6 @@ class TestSeuBarriga(unittest.TestCase):
 				self.driver.get("https://seubarriga.wcaquino.me/login")
 
 		def tearDown(self):
-				# Fechar o navegador após o teste
 				self.driver.quit()
 
 		# Gera um novo login aleatório para teste de cadastro
@@ -35,7 +34,6 @@ class TestSeuBarriga(unittest.TestCase):
 				login_new_user = self.generate_new_user()
 				password_new_user = 'senhaestupida123'
 
-				# Localizar página de cadastro
 				cadastro = WebDriverWait(self.driver, 10).until(
 						EC.presence_of_element_located((By.XPATH, '//*[@id="bs-example-navbar-collapse-1"]/ul/li[2]/a'))
 				)
@@ -67,6 +65,7 @@ class TestSeuBarriga(unittest.TestCase):
 				except Exception as e:
 						print('Falha no cadastro do usuário:', str(e))
 
+		# Loga o usuário recém-criado
 		def login_user(self, user, password):
 				email_field = self.driver.find_element(By.ID, "email")
 				email_field.send_keys(user)
@@ -85,6 +84,7 @@ class TestSeuBarriga(unittest.TestCase):
 				except Exception as e:
 						print("Falha no login:", str(e))
 
+		# Adiciona nova fatura
 		def add_invoice(self):
 				new_invoice = self.generate_new_invoice()
 				nav_bar = self.driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[2]/a')
@@ -107,6 +107,7 @@ class TestSeuBarriga(unittest.TestCase):
 				except Exception as e:
 						print('Erro ao adicionar nova conta:', str(e))
 
+		# Lista e edita fatura
 		def list_and_edit_invoice(self):
 				nav_bar = self.driver.find_element(By.XPATH, '//*[@id="navbar"]/ul/li[2]/a')
 				nav_bar.click()
@@ -130,6 +131,7 @@ class TestSeuBarriga(unittest.TestCase):
 				except Exception as e:
 						print('Erro ao alterar conta:', str(e))
 
+		# Deleta fatura
 		def delete_invoice(self):
 				delete_invoice = self.driver.find_element(By.XPATH, '//*[@id="tabelaContas"]/tbody/tr/td[2]/a[2]/span')
 				delete_invoice.click()
