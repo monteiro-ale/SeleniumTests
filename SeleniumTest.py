@@ -126,8 +126,15 @@ class TestSeuBarriga(unittest.TestCase):
 								EC.presence_of_element_located((By.XPATH, "//div[@class='alert alert-success']"))
 						)
 						print(f'Conta alterada com sucesso! {message.text}')
+						self.delete_invoice()
 				except Exception as e:
 						print('Erro ao alterar conta:', str(e))
+
+		def delete_invoice(self):
+				delete_invoice = self.driver.find_element(By.XPATH, '//*[@id="tabelaContas"]/tbody/tr/td[2]/a[2]/span')
+				delete_invoice.click()
+				time.sleep(2)
+				print('Fatura deletada com sucesso.')
 
 
 
